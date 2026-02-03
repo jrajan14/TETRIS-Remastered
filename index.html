@@ -10,19 +10,6 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧱</text></svg>">
 </head>
 <body>
-    <div id="mobile-controls-overlay" class="hidden">
-        <div class="mobile-controls">
-            <div class="mobile-row">
-                <button id="mobile-left" class="mobile-btn"><i class="fas fa-arrow-left"></i></button>
-                <button id="mobile-rotate" class="mobile-btn rotate-btn"><i class="fas fa-redo"></i></button>
-                <button id="mobile-right" class="mobile-btn"><i class="fas fa-arrow-right"></i></button>
-            </div>
-            <div class="mobile-row">
-                <button id="mobile-down" class="mobile-btn wide-btn"><i class="fas fa-arrow-down"></i> Speed Down</button>
-            </div>
-        </div>
-    </div>
-
     <div id="game-container">
         <header class="game-header">
             <h1><i class="fas fa-cubes"></i> TETRIS <span class="remastered">REMASTERED</span></h1>
@@ -90,62 +77,64 @@
 
         <div id="game-screen" class="screen">
             <div id="game-area">
-                <div id="player1-container" class="player-container">
-                    <div class player-header>
-                        <h3><i class="fas fa-user"></i> PLAYER 1</h3>
-                        <div class="player-controls">WASD Controls</div>
-                    </div>
-                    <div class="game-info">
-                        <div class="info-box">
-                            <span class="info-label">Score</span>
-                            <span id="p1-score" class="info-value">0</span>
+                <div class="players-container">
+                    <div id="player1-container" class="player-container">
+                        <div class="player-header">
+                            <h3><i class="fas fa-user"></i> PLAYER 1</h3>
+                            <div class="player-controls">WASD Controls</div>
                         </div>
-                        <div class="info-box">
-                            <span class="info-label">Level</span>
-                            <span id="p1-level" class="info-value">1</span>
+                        <div class="game-info">
+                            <div class="info-box">
+                                <span class="info-label">Score</span>
+                                <span id="p1-score" class="info-value">0</span>
+                            </div>
+                            <div class="info-box">
+                                <span class="info-label">Level</span>
+                                <span id="p1-level" class="info-value">1</span>
+                            </div>
+                            <div class="info-box">
+                                <span class="info-label">Lines</span>
+                                <span id="p1-lines" class="info-value">0</span>
+                            </div>
                         </div>
-                        <div class="info-box">
-                            <span class="info-label">Lines</span>
-                            <span id="p1-lines" class="info-value">0</span>
-                        </div>
-                    </div>
-                    <div class="game-board-container">
-                        <canvas id="player1-board" class="game-board" width="300" height="600"></canvas>
-                        <div class="next-block-container">
-                            <div class="next-label">NEXT</div>
-                            <canvas id="player1-next" class="next-block" width="120" height="120"></canvas>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="multiplayer-divider" class="hidden">
-                    <div class="vs-circle">VS</div>
-                </div>
-                
-                <div id="player2-container" class="player-container hidden">
-                    <div class="player-header">
-                        <h3><i class="fas fa-user"></i> PLAYER 2</h3>
-                        <div class="player-controls">Arrow Key Controls</div>
-                    </div>
-                    <div class="game-info">
-                        <div class="info-box">
-                            <span class="info-label">Score</span>
-                            <span id="p2-score" class="info-value">0</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">Level</span>
-                            <span id="p2-level" class="info-value">1</span>
-                        </div>
-                        <div class="info-box">
-                            <span class="info-label">Lines</span>
-                            <span id="p2-lines" class="info-value">0</span>
+                        <div class="game-board-container">
+                            <canvas id="player1-board" class="game-board" width="300" height="600"></canvas>
+                            <div class="next-block-container">
+                                <div class="next-label">NEXT</div>
+                                <canvas id="player1-next" class="next-block" width="120" height="120"></canvas>
+                            </div>
                         </div>
                     </div>
-                    <div class="game-board-container">
-                        <canvas id="player2-board" class="game-board" width="300" height="600"></canvas>
-                        <div class="next-block-container">
-                            <div class="next-label">NEXT</div>
-                            <canvas id="player2-next" class="next-block" width="120" height="120"></canvas>
+                    
+                    <div id="multiplayer-divider" class="hidden">
+                        <div class="vs-circle">VS</div>
+                    </div>
+                    
+                    <div id="player2-container" class="player-container hidden">
+                        <div class="player-header">
+                            <h3><i class="fas fa-user"></i> PLAYER 2</h3>
+                            <div class="player-controls">Arrow Key Controls</div>
+                        </div>
+                        <div class="game-info">
+                            <div class="info-box">
+                                <span class="info-label">Score</span>
+                                <span id="p2-score" class="info-value">0</span>
+                            </div>
+                            <div class="info-box">
+                                <span class="info-label">Level</span>
+                                <span id="p2-level" class="info-value">1</span>
+                            </div>
+                            <div class="info-box">
+                                <span class="info-label">Lines</span>
+                                <span id="p2-lines" class="info-value">0</span>
+                            </div>
+                        </div>
+                        <div class="game-board-container">
+                            <canvas id="player2-board" class="game-board" width="300" height="600"></canvas>
+                            <div class="next-block-container">
+                                <div class="next-label">NEXT</div>
+                                <canvas id="player2-next" class="next-block" width="120" height="120"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -160,6 +149,20 @@
                     <button id="menu-btn" class="control-btn">
                         <i class="fas fa-home"></i> Main Menu
                     </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Controls - Only shown during gameplay on mobile -->
+            <div id="mobile-controls" class="hidden">
+                <div class="mobile-controls-container">
+                    <div class="mobile-row">
+                        <button id="mobile-left" class="mobile-btn"><i class="fas fa-arrow-left"></i></button>
+                        <button id="mobile-rotate" class="mobile-btn rotate-btn"><i class="fas fa-redo"></i> Rotate</button>
+                        <button id="mobile-right" class="mobile-btn"><i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="mobile-row">
+                        <button id="mobile-down" class="mobile-btn wide-btn"><i class="fas fa-arrow-down"></i> Speed Down</button>
+                    </div>
                 </div>
             </div>
         </div>
