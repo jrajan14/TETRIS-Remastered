@@ -1,5 +1,6 @@
 // TETRIS Remastered
 document.addEventListener('DOMContentLoaded', () => {
+    
     const BOARD_WIDTH = 10;
     const BOARD_HEIGHT = 20;
     const BLOCK_SIZE = 30;
@@ -54,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ]  // Z
     ];
     
-    // Options variables
+    // Game Variables
     let gameMode = 'single'; // 'single' or 'multi'
     let difficulty = 'medium';
     let isMobile = false;
@@ -105,12 +106,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const gameOverScreen = document.getElementById('game-over-screen');
-    const mobileControlsOverlay = document.getElementById('mobile-controls-overlay');
     const deviceWarning = document.getElementById('device-warning');
     const multiplayerDivider = document.getElementById('multiplayer-divider');
     const player2Container = document.getElementById('player2-container');
     const winnerAnnouncement = document.getElementById('winner-announcement');
+    const mobileControls = document.getElementById('mobile-controls');
     
+    // Force hide all non-active screens
+    function forceHideScreens() {
+        document.querySelectorAll('.screen').forEach(screen => {
+            if (!screen.classList.contains('active')) {
+                screen.style.display = 'none';
+                screen.style.visibility = 'hidden';
+                screen.style.opacity = '0';
+            } else {
+                screen.style.display = 'flex';
+                screen.style.visibility = 'visible';
+                screen.style.opacity = '1';
+            }
+        });
+    }
+
     // Initialize the game
     function init() {
         // Detect mobile device
@@ -123,17 +139,14 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.mode-option[data-mode="multi"]').style.opacity = '0.5';
             document.querySelector('.mode-option[data-mode="multi"]').style.pointerEvents = 'none';
             document.querySelector('.mode-option[data-mode="single"]').classList.add('selected');
+            mobileControls.classList.add('hidden');
         } else {
             deviceWarning.classList.add('hidden');
         }
         
         // Set up event listeners
         setupEventListeners();
-        
-        // Show mobile controls if on mobile
-        if (isMobile) {
-            mobileControlsOverlay.classList.remove('hidden');
-        }
+        forceHideScreens();
     }
     
     // Set up all event listeners
@@ -275,9 +288,16 @@ document.addEventListener('DOMContentLoaded', () => {
             gameLoopId = null;
         }
         
-        // Update UI
+        // Show mobile controls if on mobile
+        if (isMobile) {
+            mobileControls.classList.remove('hidden');
+            document.body.classList.add('mobile-active');
+        }
+        
+        // Hide start screen, show game screen
         startScreen.classList.remove('active');
         gameScreen.classList.add('active');
+        gameOverScreen.classList.remove('active'); // Make sure game over is hidden
         
         // Reset game state
         isGameOver = false;
@@ -305,7 +325,10 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Show notification
         showNotification('Game Started!', 1500);
+
+        forceHideScreens();
     }
+
     
     // Initialize a player
     function initPlayer(player, boardId, nextId) {
@@ -426,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateAnimations(deltaTime) {
         for (let i = lineClearAnimations.length - 1; i >= 0; i--) {
             const anim = lineClearAnimations[i];
-            anim.progress += deltaTime / 300; //  animation timing
+            anim.progress += deltaTime / 300; // 300ms animation
             
             if (anim.progress >= 1) {
                 lineClearAnimations.splice(i, 1);
@@ -844,6 +867,12 @@ document.addEventListener('DOMContentLoaded', () => {
             gameLoopId = null;
         }
         
+        // Hide mobile controls on game over
+        if (isMobile) {
+            mobileControls.classList.add('hidden');
+            document.body.classList.remove('mobile-active');
+        }
+        
         // Update final scores
         document.getElementById('final-p1-score').textContent = player1.score.toLocaleString();
         document.getElementById('final-p1-level').textContent = player1.level;
@@ -904,8 +933,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Play again
     function playAgain() {
+        // Hide game over screen
         gameOverScreen.classList.remove('active');
+        
+        // Start new game
         startGame();
+        forceHideScreens();
     }
     
     // Go to main menu
@@ -916,12 +949,21 @@ document.addEventListener('DOMContentLoaded', () => {
             gameLoopId = null;
         }
         
+        // Hide mobile controls
+        if (isMobile) {
+            mobileControls.classList.add('hidden');
+            document.body.classList.remove('mobile-active');
+        }
+        
+        // Show start screen, hide others
+        startScreen.classList.add('active');
         gameScreen.classList.remove('active');
         gameOverScreen.classList.remove('active');
-        startScreen.classList.add('active');
         
         // Reset winner announcement
         winnerAnnouncement.classList.add('hidden');
+
+        forceHideScreens();
     }
     
     // Show notification
