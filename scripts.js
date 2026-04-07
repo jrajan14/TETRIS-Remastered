@@ -1,4 +1,5 @@
 // TETRIS Remastered
+
 document.addEventListener('DOMContentLoaded', () => {
     
     const BOARD_WIDTH = 10;
